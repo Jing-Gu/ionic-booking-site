@@ -4,20 +4,25 @@ import { Routes, RouterModule } from '@angular/router';
 import { OfferPage } from './offer.page';
 
 const routes: Routes = [
+  /* {
+    path: '',
+    redirectTo: 'offer',
+    pathMatch: 'full'
+  }, */
   {
     path: '',
     component: OfferPage
   },
   {
-    path: 'new-offer',
+    path: 'new',
     loadChildren: () => import('./new-offer/new-offer.module').then( m => m.NewOfferPageModule)
   },
   {
-    path: 'edit-offer',
+    path: 'edit/:offerId',
     loadChildren: () => import('./edit-offer/edit-offer.module').then( m => m.EditOfferPageModule)
   },
   {
-    path: 'offer-bookings',
+    path: 'book/:offerId',
     loadChildren: () => import('./offer-bookings/offer-bookings.module').then( m => m.OfferBookingsPageModule)
   }
 ];
