@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { NavController } from '@ionic/angular'
+import { Subscription } from 'rxjs'
 import { Place } from '../../places.model'
 import { PlacesService } from '../../places.service'
 
@@ -10,10 +11,11 @@ import { PlacesService } from '../../places.service'
   templateUrl: './edit-offer.page.html',
   styleUrls: ['./edit-offer.page.scss'],
 })
-export class EditOfferPage implements OnInit {
+export class EditOfferPage implements OnInit, OnDestroy {
 
   place: Place
   editForm: FormGroup
+  private placeSub: Subscription
   
   constructor(
     private route: ActivatedRoute,
@@ -27,18 +29,20 @@ export class EditOfferPage implements OnInit {
         this.navCtrl.navigateBack('/places/offer')
         return
       }
-      this.place = this.placesService.getCurrentPlace(paramMap.get('offerId'))
+      
+      this.placeSub = this.placesService.getCurrentPlace(paramMap.get('offerId')).subscribe(place =>{
+        this.place = place
 
-      // the form should be created inside subscribe
-      this.editForm = new FormGroup({
-        title: new FormControl(this.place.title, {
-          updateOn: 'blur',
-          validators: [Validators.required]
-        }),
-        description: new FormControl(this.place.description, {
-          updateOn: 'blur',
-          validators: [Validators.required, Validators.maxLength(180)]
-        }),
+        this.editForm = new FormGroup({
+          title: new FormControl(this.place.title, {
+            updateOn: 'blur',
+            validators: [Validators.required]
+          }),
+          description: new FormControl(this.place.description, {
+            updateOn: 'blur',
+            validators: [Validators.required, Validators.maxLength(180)]
+          }),
+        })
       })
     })
   }
@@ -48,6 +52,10 @@ export class EditOfferPage implements OnInit {
       return
     }
     console.log(this.editForm)
+  }
+
+  ngOnDestroy(){
+    this.placeSub.unsubscribe()
   }
 
 }
