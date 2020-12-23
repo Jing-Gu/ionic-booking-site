@@ -1,0 +1,15 @@
+.offer-detail{
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  ion-icon{
+    margin-right: 0.5rem;
+  }
+  ion-text{
+    font-size: 0.8rem;
+  }
+  span{
+    margin: 0 0.5rem;
+    font-size: 0.8rem
+  }
+}
