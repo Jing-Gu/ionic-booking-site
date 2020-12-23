@@ -1,6 +1,6 @@
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes'
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { LoadingController } from '@ionic/angular'
 import { AuthService } from './auth.service'
@@ -23,10 +23,14 @@ export class AuthPage implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.loginForm = this.fb.group({
+    this.loginForm = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')])
+    })
+    /* this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]]
-    })
+    }) */
   }
 
   get email() {

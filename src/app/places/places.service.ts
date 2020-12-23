@@ -12,13 +12,19 @@ export class PlacesService {
       'Swiss chalet', 
       'Come to Leysin and ski',
       'https://i.pinimg.com/originals/f1/b0/66/f1b066df0fdb3a05d81fef2e085c076b.jpg',
-      249.89 ),
+      249.89,
+      new Date('2019-01-01'),
+      new Date('2019-12-31') 
+      ),
     new Place(
       'p2',
       'London tea house',
       'Drink your afternoon tea with the one',
       'https://whateveryourdose.com/wp-content/uploads/2016/12/118.jpg',
-      149.99)
+      149.99,
+      new Date('2019-01-01'),
+      new Date('2019-12-31')
+      )
   ]
 
   constructor() { }
